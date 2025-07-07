@@ -1,58 +1,65 @@
 import React, { useState } from 'react';
-import { Play, Plus, Search, Zap } from 'lucide-react';
+import { Play, Plus, Search, Zap, User } from 'lucide-react';
 
 interface HeaderProps {
-  onShowAddForm: () => void;
-  onShowAutoForm: () => void;
-  searchTerm: string;
-  onSearchChange: (term: string) => void;
+  menuItems?: string[];
+  onShowAutoForm?: () => void;
+  onShowAddForm?: () => void;
 }
 
-export function Header({ onShowAddForm, onShowAutoForm, searchTerm, onSearchChange }: HeaderProps) {
+export function Header({ menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 'Auto', 'Manual'], onShowAutoForm, onShowAddForm }: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="bg-black/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-800/50">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Play className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold text-white">
-                GL<span className="text-blue-400">Watch</span>
-              </h1>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Buscar animes..."
-                value={searchTerm}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className="bg-gray-900/50 border border-gray-700/50 rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 w-80 transition-all"
-              />
-            </div>
-            
-            <button
-              onClick={onShowAutoForm}
-              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-2.5 rounded-xl flex items-center space-x-2 transition-all duration-200 hover:scale-105 shadow-lg"
-            >
-              <Zap className="w-4 h-4" />
-              <span>Auto</span>
-            </button>
-
-            <button
-              onClick={onShowAddForm}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl flex items-center space-x-2 transition-all duration-200 hover:scale-105 shadow-lg"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Manual</span>
-            </button>
-          </div>
-        </div>
+    <header className="w-full px-8 py-4 flex items-center justify-between bg-black/40 backdrop-blur-md fixed top-0 left-0 z-50 border-b border-transparent">
+      <div className="flex items-center gap-8">
+        <h1 className="text-3xl font-extrabold italic tracking-[0.35em] montserrat select-none">
+          <span className="text-white">LUST</span><span className="text-primary">.tv</span>
+        </h1>
+        <nav className="flex gap-8 ml-8">
+          {menuItems.map((item, idx) => {
+            if (item === 'Auto') {
+              return (
+                <button
+                  key={item}
+                  onClick={onShowAutoForm}
+                  className={`relative text-white/90 font-bold text-lg px-1 transition-colors duration-200 hover:text-primary`}
+                >
+                  {item}
+                </button>
+              );
+            }
+            if (item === 'Manual') {
+              return (
+                <button
+                  key={item}
+                  onClick={onShowAddForm}
+                  className={`relative text-white/90 font-bold text-lg px-1 transition-colors duration-200 hover:text-primary`}
+                >
+                  {item}
+                </button>
+              );
+            }
+            return (
+              <a
+                key={item}
+                href="#"
+                className={`relative text-white/90 font-bold text-lg px-1 transition-colors duration-200 ${idx === 0 ? 'after:absolute after:left-0 after:-bottom-1 after:w-full after:h-0.5 after:bg-primary after:rounded-full after:content-[\'\']' : 'hover:text-primary'}`}
+              >
+                {item}
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+      <div className="flex items-center gap-6">
+        <button className="text-white/80 hover:text-primary transition-colors">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+        </button>
+        <button className="flex items-center gap-2 text-white/90 font-bold uppercase tracking-wide hover:text-primary transition-colors">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" /><path d="M5.5 21a7.5 7.5 0 0 1 13 0" /></svg>
+          <span className="hidden md:inline">MINHA CONTA</span>
+        </button>
       </div>
     </header>
   );

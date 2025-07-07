@@ -100,11 +100,8 @@ export function AddContentForm({ onSubmit, onClose }: AddContentFormProps) {
   };
 
   return (
-    <div 
-      className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      onClick={handleBackdropClick}
-    >
-      <div className="bg-gray-900/95 backdrop-blur-md rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-gray-800/50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <div className="bg-card rounded-2xl p-8 shadow-2xl w-full max-w-lg">
         <div className="flex items-center justify-between p-6 border-b border-gray-800/50">
           <h2 className="text-2xl font-bold text-white">Adicionar Conteúdo</h2>
           <button

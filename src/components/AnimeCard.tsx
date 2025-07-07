@@ -16,7 +16,7 @@ export function AnimeCard({ anime, onClick, onRemove }: AnimeCardProps) {
       className="group cursor-pointer transition-all duration-300 hover:scale-105"
       onClick={() => onClick(anime)}
     >
-      <div className="relative overflow-hidden rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800/50 hover:border-gray-700/50 transition-all duration-300">
+      <div className="relative rounded-2xl overflow-hidden shadow-lg bg-card group min-w-[220px] max-w-[240px] h-[340px] flex-shrink-0 transition-transform duration-300 hover:scale-105">
         {/* Remove Button */}
         {onRemove && (
           <button
@@ -39,7 +39,14 @@ export function AnimeCard({ anime, onClick, onRemove }: AnimeCardProps) {
           />
           
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4">
+            <h3 className="text-lg font-bold text-white mb-1 drop-shadow-md line-clamp-2">{anime.title}</h3>
+            <div className="flex items-center text-accent text-sm space-x-4">
+              <span>{anime.year}</span>
+              <span className="flex items-center"><Star className="w-4 h-4 mr-1 text-primary" />{anime.rating}</span>
+              <span>{anime.episode_count} ep</span>
+            </div>
+          </div>
           
           {/* Play button */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -93,36 +100,6 @@ export function AnimeCard({ anime, onClick, onRemove }: AnimeCardProps) {
               </div>
             </div>
           )}
-        </div>
-
-        {/* Content */}
-        <div className="p-4">
-          <h3 className="font-semibold text-lg text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">
-            {anime.title}
-          </h3>
-          
-          {anime.description && (
-            <p className="text-sm text-gray-400 line-clamp-2 mb-3">
-              {anime.description}
-            </p>
-          )}
-          
-          <div className="flex items-center justify-between text-sm text-gray-400">
-            <div className="flex items-center space-x-3">
-              {anime.year && (
-                <div className="flex items-center space-x-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>{anime.year}</span>
-                </div>
-              )}
-            </div>
-            
-            {anime.genre && (
-              <span className="bg-gray-800/50 px-2 py-1 rounded-lg text-xs font-medium">
-                {anime.genre}
-              </span>
-            )}
-          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body, #root {
+  min-height: 100vh;
+  background: theme('colors.background');
+  color: #fff;
+  font-family: 'Montserrat', 'Inter', sans-serif;
+}
+
+body {
+  background: theme('colors.background');
+  color: #fff;
+  font-family: theme('fontFamily.sans');
+}
+
+.montserrat {
+  font-family: 'Montserrat', 'Inter', sans-serif;
+}
 
 @layer utilities {
   .line-clamp-2 {

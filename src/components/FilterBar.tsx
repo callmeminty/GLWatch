@@ -98,11 +98,10 @@ export function FilterBar({
       <div className="flex flex-wrap gap-3">
         <button
           onClick={() => onTypeChange('movie')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all ${
-            selectedType === 'movie' 
-              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-              : 'bg-gray-800/30 text-gray-300 hover:bg-gray-700/50 border border-gray-700/30'
-          }`}
+          className={`px-6 py-2 rounded-xl font-medium transition-colors border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-primary/50
+            ${selectedType === 'movie' 
+              ? 'bg-primary text-white border-primary' 
+              : 'bg-secondary text-accent hover:bg-primary/10 hover:text-primary'}`}
         >
           <Film className="w-4 h-4" />
           <span>Filmes</span>
@@ -110,11 +109,10 @@ export function FilterBar({
         
         <button
           onClick={() => onTypeChange('series')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all ${
-            selectedType === 'series' 
-              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-              : 'bg-gray-800/30 text-gray-300 hover:bg-gray-700/50 border border-gray-700/30'
-          }`}
+          className={`px-6 py-2 rounded-xl font-medium transition-colors border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-primary/50
+            ${selectedType === 'series' 
+              ? 'bg-primary text-white border-primary' 
+              : 'bg-secondary text-accent hover:bg-primary/10 hover:text-primary'}`}
         >
           <Tv className="w-4 h-4" />
           <span>Séries</span>
@@ -123,12 +121,11 @@ export function FilterBar({
         {availableGenres.slice(0, 4).map(genre => (
           <button
             key={genre}
+            className={`px-6 py-2 rounded-xl font-medium transition-colors border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-primary/50
+              ${selectedGenre === genre 
+                ? 'bg-primary text-white border-primary' 
+                : 'bg-secondary text-accent hover:bg-primary/10 hover:text-primary'}`}
             onClick={() => onGenreChange(selectedGenre === genre ? '' : genre)}
-            className={`px-4 py-2 rounded-xl transition-all ${
-              selectedGenre === genre 
-                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' 
-                : 'bg-gray-800/30 text-gray-300 hover:bg-gray-700/50 border border-gray-700/30'
-            }`}
           >
             {genre}
           </button>

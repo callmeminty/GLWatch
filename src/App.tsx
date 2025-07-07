@@ -10,6 +10,7 @@ import { useAnimeContent } from './hooks/useAnimeContent';
 import { useEpisodes } from './hooks/useEpisodes';
 import { AnimeContent } from './lib/supabase';
 import { Loader2, Play, AlertCircle, Database } from 'lucide-react';
+import HeroBanner from './components/HeroBanner';
 
 function App() {
   const { content, loading, error, addContent, refetch, deleteContent } = useAnimeContent();
@@ -118,6 +119,15 @@ function App() {
     }
   };
 
+  // Find a random film from the content list
+  const films = content.filter(item => item.type === 'movie');
+  const featured = films.length > 0 ? films[Math.floor(Math.random() * films.length)] : null;
+
+  // Para o banner, buscar a melhor imagem disponível
+  const getBannerImage = (item: any) => item.backdrop_url || item.poster_url || '';
+
+  const menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 'Auto', 'Manual'];
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
@@ -150,111 +160,34 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-background text-white font-sans">
       <Header
-        onShowAddForm={() => setShowAddForm(true)}
+        menuItems={menuItems}
         onShowAutoForm={() => setShowAutoForm(true)}
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
+        onShowAddForm={() => setShowAddForm(true)}
       />
-
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <FilterBar
-          selectedType={selectedType}
-          onTypeChange={setSelectedType}
-          selectedGenre={selectedGenre}
-          onGenreChange={setSelectedGenre}
-          availableGenres={availableGenres}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
+      {featured && (
+        <HeroBanner
+          backgroundUrl={getBannerImage(featured)}
+          title={featured.title}
+          subtitle={featured.year ? String(featured.year) : ''}
+          onWatch={() => {}}
+          onAddToWatchLater={() => {}}
         />
-
-        {/* Content Seeder - Show when no content */}
-        {content.length === 0 && !loading && (
-          <div className="mb-8">
-            <ContentSeeder onContentAdded={handleContentAdded} />
-          </div>
-        )}
-
-        {/* Demo Content Button - Show when there is content */}
-        {content.length > 0 && (
-          <div className="mb-6 flex justify-end">
-            <button
-              onClick={() => setShowSeeder(!showSeeder)}
-              className="bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 text-gray-300 px-4 py-2 rounded-xl flex items-center space-x-2 transition-colors"
-            >
-              <Database className="w-4 h-4" />
-              <span>Gerenciar Conteúdo Demo</span>
-            </button>
-          </div>
-        )}
-
-        {showSeeder && content.length > 0 && (
-          <div className="mb-8">
-            <ContentSeeder onContentAdded={handleContentAdded} />
-          </div>
-        )}
-
-        {filteredContent.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Play className="w-12 h-12 text-blue-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">
-                {searchTerm || selectedType || selectedGenre ? 'Nenhum resultado encontrado' : 'Bem-vindo ao GLWatch'}
-              </h3>
-              <p className="text-gray-400 mb-8">
-                {searchTerm || selectedType || selectedGenre 
-                  ? 'Tente ajustar os filtros ou termo de busca para encontrar o que procura'
-                  : 'Sua plataforma de streaming de animes. Comece adicionando conteúdo automaticamente ou use nosso conteúdo de demonstração!'
-                }
-              </p>
-              {!searchTerm && !selectedType && !selectedGenre && content.length === 0 && (
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button
-                    onClick={() => setShowAutoForm(true)}
-                    className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-3 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg"
-                  >
-                    Busca Automática
-                  </button>
-                  <button
-                    onClick={() => setShowAddForm(true)}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg"
-                  >
-                    Adicionar Manualmente
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <>
-            {/* Content Stats */}
-            <div className="mb-6 flex items-center justify-between">
-              <div className="text-gray-400">
-                <span className="text-white font-medium">{filteredContent.length}</span> {filteredContent.length === 1 ? 'item encontrado' : 'itens encontrados'}
-              </div>
-              <div className="flex items-center space-x-4 text-sm text-gray-400">
-                <span>{content.filter(c => c.type === 'movie').length} filmes</span>
-                <span>{content.filter(c => c.type === 'series').length} séries</span>
-              </div>
-            </div>
-
-            {/* Content Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
-              {filteredContent.map(anime => (
-                <AnimeCard
-                  key={anime.id}
-                  anime={anime}
-                  onClick={setSelectedAnime}
-                  onRemove={handleRemoveContent}
-                />
-              ))}
-            </div>
-          </>
-        )}
-      </main>
+      )}
+      <section className="max-w-7xl mx-auto px-4">
+        <div className="flex gap-4 mt-8 mb-6">
+          <button className="px-6 py-2 rounded-full font-semibold text-white bg-background border-2 border-primary hover:bg-primary/10 transition">Lançamentos</button>
+          <button className="px-6 py-2 rounded-full font-semibold text-accent bg-background border-2 border-transparent hover:bg-primary/10 hover:text-primary transition">Novos Filmes</button>
+          <button className="px-6 py-2 rounded-full font-semibold text-accent bg-background border-2 border-transparent hover:bg-primary/10 hover:text-primary transition">Populares</button>
+          <button className="px-6 py-2 rounded-full font-semibold text-accent bg-background border-2 border-transparent hover:bg-primary/10 hover:text-primary transition">Mais Assistidos</button>
+        </div>
+        <div className="flex gap-6 overflow-x-auto pb-4 hide-scrollbar">
+          {content.map(anime => (
+            <AnimeCard key={anime.id} anime={anime} onClick={setSelectedAnime} />
+          ))}
+        </div>
+      </section>
 
       {selectedAnime && (
         <VideoPlayer
@@ -276,6 +209,38 @@ function App() {
           onClose={() => setShowAutoForm(false)}
         />
       )}
+
+      <footer className="mt-16 bg-black/95 text-gray-300 pt-12 pb-8 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center text-lg font-semibold tracking-widest text-white mb-10">
+            FILMES ONLINE GRÁTIS - SERIES ONLINE - ANIMES ONLINE
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+            <div>
+              <h3 className="text-xl font-bold text-white mb-4">Informações</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="hover:underline">Conta VIP</a></li>
+                <li><a href="#" className="hover:underline">Suporte e FAQ</a></li>
+                <li><a href="#" className="hover:underline">Política DMCA</a></li>
+                <li><a href="#" className="hover:underline">Termos e condições</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white mb-4">Mídias Sociais</h3>
+              <a href="#" className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2 rounded-full mb-2 transition">🐦 Siga o Lust.tv</a>
+              <p className="text-xs mt-2">Sem Spam! Postamos apenas atualizações do site e aplicativo.</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white mb-4">Aplicativo Lust.tv</h3>
+              <a href="#" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full mb-2 transition">📱 Baixe o aplicativo</a>
+              <p className="text-xs mt-2">Já conhece o nosso aplicativo?<br/>Clique e descubra mais informações!</p>
+            </div>
+          </div>
+          <div className="text-center text-xs text-gray-400 mt-8">
+            © Copyright Todos os direitos reservados a Lust.tv 2024
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
