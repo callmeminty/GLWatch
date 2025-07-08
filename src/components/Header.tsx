@@ -9,12 +9,26 @@ interface HeaderProps {
 
 export function Header({ menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 'Auto', 'Manual'], onShowAutoForm, onShowAddForm }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+<<<<<<< HEAD
+=======
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem('owl_logged_in'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('owl_logged_in');
+    setIsLoggedIn(false);
+    window.location.reload();
+  };
+>>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
 
   return (
     <header className="w-full px-8 py-4 flex items-center justify-between bg-black/40 backdrop-blur-md fixed top-0 left-0 z-50 border-b border-transparent">
       <div className="flex items-center gap-8">
         <h1 className="text-3xl font-extrabold italic tracking-[0.35em] montserrat select-none">
+<<<<<<< HEAD
           <span className="text-white">LUST</span><span className="text-primary">.tv</span>
+=======
+          <span className="text-white">OWL</span><span className="text-primary">.tv</span>
+>>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
         </h1>
         <nav className="flex gap-8 ml-8">
           {menuItems.map((item, idx) => {
@@ -60,6 +74,12 @@ export function Header({ menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" /><path d="M5.5 21a7.5 7.5 0 0 1 13 0" /></svg>
           <span className="hidden md:inline">MINHA CONTA</span>
         </button>
+<<<<<<< HEAD
+=======
+        {isLoggedIn && (
+          <button onClick={handleLogout} className="text-white/80 hover:text-red-400 transition-colors font-bold">Logout</button>
+        )}
+>>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
       </div>
     </header>
   );
