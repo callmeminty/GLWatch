@@ -119,13 +119,12 @@ function App() {
     }
   };
 
-  // Find a random film from the content list
+  // Find the 'sinners' film from the content list
   type AnimeContentWithImages = AnimeContent & {
     backdrop_url?: string;
     poster_url?: string;
   };
-  const films = content.filter((item: AnimeContentWithImages) => item.type === 'movie');
-  const featured = films.length > 0 ? films[Math.floor(Math.random() * films.length)] : null;
+  const featured = content.find((item: AnimeContentWithImages) => item.type === 'movie' && item.title.toLowerCase() === 'sinners') || null;
 
   // Para o banner, buscar a melhor imagem disponível
   const getBannerImage = (item: AnimeContentWithImages) => item.backdrop_url || item.poster_url || '';
