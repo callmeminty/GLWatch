@@ -26,15 +26,9 @@ function App() {
 
   const availableGenres = useMemo(() => {
     const genres = content
-<<<<<<< HEAD
-      .map(item => item.genre)
-      .filter((genre): genre is string => Boolean(genre))
-      .filter((genre, index, arr) => arr.indexOf(genre) === index);
-=======
       .map((item: AnimeContent) => item.genre)
       .filter((genre: string | undefined): genre is string => Boolean(genre))
       .filter((genre: string, index: number, arr: string[]) => arr.indexOf(genre) === index);
->>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
     return genres.sort();
   }, [content]);
 
@@ -42,27 +36,13 @@ function App() {
     let filtered = content;
 
     if (searchTerm) {
-<<<<<<< HEAD
-      filtered = filtered.filter(item =>
-=======
       filtered = filtered.filter((item: AnimeContent) =>
->>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
         item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (selectedType) {
-<<<<<<< HEAD
-      filtered = filtered.filter(item => item.type === selectedType);
-    }
-
-    if (selectedGenre) {
-      filtered = filtered.filter(item => item.genre === selectedGenre);
-    }
-
-    filtered.sort((a, b) => {
-=======
       filtered = filtered.filter((item: AnimeContent) => item.type === selectedType);
     }
 
@@ -71,7 +51,6 @@ function App() {
     }
 
     filtered.sort((a: AnimeContent, b: AnimeContent) => {
->>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
       switch (sortBy) {
         case 'title':
           return a.title.localeCompare(b.title);
@@ -141,13 +120,6 @@ function App() {
   };
 
   // Find a random film from the content list
-<<<<<<< HEAD
-  const films = content.filter(item => item.type === 'movie');
-  const featured = films.length > 0 ? films[Math.floor(Math.random() * films.length)] : null;
-
-  // Para o banner, buscar a melhor imagem disponível
-  const getBannerImage = (item: any) => item.backdrop_url || item.poster_url || '';
-=======
   type AnimeContentWithImages = AnimeContent & {
     backdrop_url?: string;
     poster_url?: string;
@@ -157,7 +129,6 @@ function App() {
 
   // Para o banner, buscar a melhor imagem disponível
   const getBannerImage = (item: AnimeContentWithImages) => item.backdrop_url || item.poster_url || '';
->>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
 
   const menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 'Auto', 'Manual'];
 
@@ -262,29 +233,17 @@ function App() {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white mb-4">Mídias Sociais</h3>
-<<<<<<< HEAD
-              <a href="#" className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2 rounded-full mb-2 transition">🐦 Siga o Lust.tv</a>
-              <p className="text-xs mt-2">Sem Spam! Postamos apenas atualizações do site e aplicativo.</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white mb-4">Aplicativo Lust.tv</h3>
-=======
-              <a href="#" className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2 rounded-full mb-2 transition">�� Siga o OWL.tv</a>
+              <a href="#" className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2 rounded-full mb-2 transition">🐦 Siga o OWL.tv</a>
               <p className="text-xs mt-2">Sem Spam! Postamos apenas atualizações do site e aplicativo.</p>
             </div>
             <div>
               <h3 className="text-xl font-bold text-white mb-4">Aplicativo OWL.tv</h3>
->>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
               <a href="#" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full mb-2 transition">📱 Baixe o aplicativo</a>
               <p className="text-xs mt-2">Já conhece o nosso aplicativo?<br/>Clique e descubra mais informações!</p>
             </div>
           </div>
           <div className="text-center text-xs text-gray-400 mt-8">
-<<<<<<< HEAD
-            © Copyright Todos os direitos reservados a Lust.tv 2024
-=======
             © Copyright Todos os direitos reservados a OWL.tv 2024
->>>>>>> c2f6cf1 (Initial commit: OWL.tv branding, login page, and performance groundwork)
           </div>
         </div>
       </footer>
