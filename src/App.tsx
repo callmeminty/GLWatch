@@ -198,6 +198,8 @@ function App() {
         menuItems={menuItems}
         onShowAutoForm={() => setShowAutoForm(true)}
         onShowAddForm={() => setShowAddForm(true)}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
       />
       {featured && (
         <HeroBanner

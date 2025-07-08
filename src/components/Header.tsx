@@ -5,9 +5,11 @@ interface HeaderProps {
   menuItems?: string[];
   onShowAutoForm?: () => void;
   onShowAddForm?: () => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
 }
 
-export function Header({ menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 'Auto', 'Manual'], onShowAutoForm, onShowAddForm }: HeaderProps) {
+export function Header({ menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 'Auto', 'Manual'], onShowAutoForm, onShowAddForm, searchTerm, setSearchTerm }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 <<<<<<< HEAD
 =======
@@ -67,6 +69,13 @@ export function Header({ menuItems = ['Início', 'Filmes', 'Séries', 'Animes', 
         </nav>
       </div>
       <div className="flex items-center gap-6">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          placeholder="Buscar..."
+          className="px-4 py-2 rounded-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary w-40 md:w-64 transition"
+        />
         <button className="text-white/80 hover:text-primary transition-colors">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
         </button>
