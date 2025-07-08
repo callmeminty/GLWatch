@@ -189,7 +189,7 @@ function App() {
           <button className="px-6 py-2 rounded-full font-semibold text-accent bg-background border-2 border-transparent hover:bg-primary/10 hover:text-primary transition">Mais Assistidos</button>
         </div>
         <div className="flex gap-6 overflow-x-auto pb-4 hide-scrollbar">
-          {content.map(anime => (
+          {filteredContent.map(anime => (
             <AnimeCard key={anime.id} anime={anime} onClick={setSelectedAnime} />
           ))}
         </div>
