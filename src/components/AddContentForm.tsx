@@ -100,8 +100,8 @@ export function AddContentForm({ onSubmit, onClose }: AddContentFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60">
-      <div className="bg-card rounded-2xl p-2 md:p-8 shadow-2xl w-full max-w-lg max-w-full max-h-[90vh] overflow-y-auto mx-2">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60 h-screen">
+      <div className="flex flex-col w-full max-w-lg max-w-full max-h-[90vh] h-full md:h-auto overflow-y-auto mx-2 bg-card rounded-2xl p-2 md:p-8 shadow-2xl">
         <div className="flex items-center justify-between p-2 md:p-6 border-b border-gray-800/50">
           <h2 className="text-2xl font-bold text-white">Adicionar Conteúdo</h2>
           <button
@@ -112,7 +112,7 @@ export function AddContentForm({ onSubmit, onClose }: AddContentFormProps) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-2 md:p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-2 md:p-6 space-y-6">
           {/* Basic Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
