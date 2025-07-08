@@ -67,6 +67,11 @@ function App() {
   }, [content, searchTerm, selectedType, selectedGenre, sortBy]);
 
   const handleAddContent = async (newContent: Omit<AnimeContent, 'id' | 'created_at' | 'updated_at'>) => {
+    const exists = content.some((item: AnimeContent) => item.title.trim().toLowerCase() === newContent.title.trim().toLowerCase() && item.type === newContent.type);
+    if (exists) {
+      alert('it already exists');
+      return;
+    }
     await addContent(newContent);
   };
 
